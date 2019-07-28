@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexi", "Nexi\Nexi.csproj", "{054C4892-FAE5-4532-917C-95B82C9C348D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{054C4892-FAE5-4532-917C-95B82C9C348D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054C4892-FAE5-4532-917C-95B82C9C348D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054C4892-FAE5-4532-917C-95B82C9C348D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054C4892-FAE5-4532-917C-95B82C9C348D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
