@@ -1,0 +1,7 @@
+s32 main: {
+    return func();
+}
+
+s32 func: {
+    return 25;
+}
