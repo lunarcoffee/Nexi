@@ -1,6 +1,6 @@
-package parser
+package dev.lunarcoffee.nexi.parser
 
-import lexer.TokenType
+import dev.lunarcoffee.nexi.lexer.TokenType
 
 internal class ParserException(actual: TokenType, expected: List<TokenType> = emptyList()) :
     Exception("Expected one of ${expected.map { it.simpleName }}, got ${actual.simpleName}!")

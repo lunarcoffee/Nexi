@@ -1,4 +1,4 @@
-package parser
+package dev.lunarcoffee.nexi.parser
 
 internal sealed class Node(internal val children: List<Node> = emptyList())
 

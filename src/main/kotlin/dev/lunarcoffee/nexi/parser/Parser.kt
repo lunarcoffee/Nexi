@@ -1,6 +1,6 @@
-package parser
+package dev.lunarcoffee.nexi.parser
 
-import lexer.*
+import dev.lunarcoffee.nexi.lexer.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.full.memberProperties
@@ -62,14 +62,14 @@ internal class Parser(private val lexer: Lexer) {
     }
 
     private fun s32() = NS32(nextTested(TInt::class).value.toInt())
+    private fun semicolon() = nextTested(TSemicolon::class)
 
-    private fun semicolon() {
-        nextTested(TSemicolon::class)
-    }
-
+    // Returns the next token from the [Lexer] only if it is the [expected] token type. There is
+    // also an optional [value] to match. If these "tests" fail, an exception is thrown.
     private fun <T : Token> nextTested(expected: KClass<out T>, value: Any? = null): T {
         val token = lexer.next()
         if (token::class == expected) {
+            // Just return the token if there is no value to match.
             if (value == null)
                 return expected.cast(token)
 

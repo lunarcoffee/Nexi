@@ -1,4 +1,4 @@
-package lexer
+package dev.lunarcoffee.nexi.lexer
 
 import kotlin.reflect.KClass
 

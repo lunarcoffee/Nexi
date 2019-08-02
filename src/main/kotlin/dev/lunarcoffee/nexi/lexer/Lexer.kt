@@ -1,4 +1,4 @@
-package lexer
+package dev.lunarcoffee.nexi.lexer
 
 import java.util.*
 
@@ -16,9 +16,11 @@ internal class Lexer(private val code: String) {
         while (curChar != '\u0000') {
             ignoreWhitespace()
 
+            // Try to consume an integral token.
             if (curChar.isDigit())
                 return TInt(consumeWhile("""\d""").toLong())
 
+            // Try to consume a keyword, or just an identifier if not a keyword.
             if (curChar.isLetter() || curChar == '_') {
                 val id = consumeWhile("""\w""")
                 return if (id in keywords) TKeyword(id) else TId(id)
