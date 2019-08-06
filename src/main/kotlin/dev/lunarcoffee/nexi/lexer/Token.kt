@@ -2,17 +2,17 @@ package dev.lunarcoffee.nexi.lexer
 
 import kotlin.reflect.KClass
 
-internal sealed class Token
-internal typealias TokenType = KClass<out Token>
+sealed class Token
+typealias TokenType = KClass<out Token>
 
-internal class TInt(internal val value: Long) : Token()
-internal class TId(internal val name: String) : Token()
-internal class TKeyword(internal val name: String) : Token()
+class TInt(internal val value: Long) : Token()
+class TId(internal val name: String) : Token()
+class TKeyword(internal val name: String) : Token()
 
-internal object TSemicolon : Token()
-internal object TColon : Token()
-internal object TLBrace : Token()
-internal object TRBrace : Token()
-internal object TLParen : Token()
-internal object TRParen : Token()
-internal object TEof : Token()
+object TSemicolon : Token()
+object TColon : Token()
+object TLBrace : Token()
+object TRBrace : Token()
+object TLParen : Token()
+object TRParen : Token()
+object TEof : Token()

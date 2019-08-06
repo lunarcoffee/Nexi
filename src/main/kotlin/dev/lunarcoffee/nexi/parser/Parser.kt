@@ -6,8 +6,8 @@ import kotlin.reflect.full.cast
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
-internal class Parser(private val lexer: Lexer) {
-    internal fun constructAST() = program()
+class Parser(private val lexer: Lexer) {
+    fun constructAST() = program()
 
     private fun program(): NProgram {
         val funcs = mutableListOf<Node>()

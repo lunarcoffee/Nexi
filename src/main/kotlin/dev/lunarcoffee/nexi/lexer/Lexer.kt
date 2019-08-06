@@ -2,14 +2,14 @@ package dev.lunarcoffee.nexi.lexer
 
 import java.util.*
 
-internal class Lexer(private val code: String) {
+class Lexer(private val code: String) {
     private var pos = 0
     private var curChar = code[pos]
 
     private val returned = Stack<Token>()
     private val keywords = setOf("s32", "return")
 
-    internal fun next(): Token {
+    fun next(): Token {
         if (returned.isNotEmpty())
             return returned.pop()
 
@@ -39,7 +39,7 @@ internal class Lexer(private val code: String) {
         return TEof
     }
 
-    internal fun peek() = next().also { returned += it }
+    fun peek() = next().also { returned += it }
 
     private fun consumeWhile(regexString: String): String {
         var res = ""
