@@ -46,6 +46,8 @@ class Parser(private val lexer: Lexer) {
     private fun exp(): NExp {
         return NExp(
             when (val peek = lexer.peek()) {
+                is TMinus -> unaryMinus()
+                is TComplement -> complement()
                 is TId -> funcCall()
                 is TInt -> s32()
                 else -> throw ParserException(peek::class, listOf(TId::class, TInt::class))
@@ -59,6 +61,16 @@ class Parser(private val lexer: Lexer) {
         nextTested(TRParen::class)
 
         return NFuncCall(name.name)
+    }
+
+    private fun unaryMinus(): NUnaryMinus {
+        nextTested(TMinus::class)
+        return NUnaryMinus(exp())
+    }
+
+    private fun complement(): NComplement {
+        nextTested(TComplement::class)
+        return NComplement(exp())
     }
 
     private fun s32() = NS32(nextTested(TInt::class).value.toInt())

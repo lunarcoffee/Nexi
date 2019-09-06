@@ -29,6 +29,8 @@ class Lexer(private val code: String) {
             return when (curChar) {
                 ':' -> TColon
                 ';' -> TSemicolon
+                '-' -> TMinus
+                '~' -> TComplement
                 '{' -> TLBrace
                 '}' -> TRBrace
                 '(' -> TLParen

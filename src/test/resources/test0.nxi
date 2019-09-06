@@ -1,5 +1,5 @@
 s32 main: {
-    return func();
+    return ~func();
 }
 
 s32 func: {

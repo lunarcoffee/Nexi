@@ -5,12 +5,14 @@ import kotlin.reflect.KClass
 sealed class Token
 typealias TokenType = KClass<out Token>
 
-class TInt(internal val value: Long) : Token()
-class TId(internal val name: String) : Token()
-class TKeyword(internal val name: String) : Token()
+class TInt(val value: Long) : Token()
+class TId(val name: String) : Token()
+class TKeyword(val name: String) : Token()
 
 object TSemicolon : Token()
 object TColon : Token()
+object TMinus : Token()
+object TComplement : Token()
 object TLBrace : Token()
 object TRBrace : Token()
 object TLParen : Token()
