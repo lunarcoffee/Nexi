@@ -44,13 +44,63 @@ class Parser(private val lexer: Lexer) {
     }
 
     private fun exp(): NExp {
+        var term: Node = term()
+        var next = lexer.peek()
+
+        // Take arbitrarily many addition or subtraction operators and then another term.
+        while (next == TPlus || next == TMinus) {
+            lexer.next()
+            val other = term()
+
+            term = if (next == TPlus) NPlus(term, other) else NMinus(term, other)
+            next = lexer.peek()
+        }
+        return NExp(term)
+    }
+
+    // Next level of precedence for high precedence binary operators, including multiplication and
+    // division.
+    private fun term(): NExp {
+        var factor: Node = factor()
+        var next = lexer.peek()
+
+        // Take arbitrarily many multiplication or division operators and then another term.
+        while (next == TAsterisk || next == TDivide) {
+            lexer.next()
+            val other = factor()
+
+            factor = if (next == TAsterisk) NMultiply(factor, other) else NDivide(factor, other)
+            next = lexer.peek()
+        }
+        return NExp(factor)
+    }
+
+    // Highest precedence tokens for forming a [NExp]: an integer literal, a function call, any
+    // unary operators, or a parenthesized expression.
+    private fun factor(): NExp {
         return NExp(
             when (val peek = lexer.peek()) {
+                is TInt -> s32()
+                is TId -> funcCall()
                 is TMinus -> unaryMinus()
                 is TComplement -> complement()
-                is TId -> funcCall()
-                is TInt -> s32()
-                else -> throw ParserException(peek::class, listOf(TId::class, TInt::class))
+                is TLParen -> {
+                    // Expect an expression surrounded by parentheses.
+                    lexer.next()
+                    val exp = exp()
+                    nextTested(TRParen::class)
+                    exp
+                }
+                else -> throw ParserException(
+                    peek::class,
+                    listOf(
+                        TInt::class,
+                        TId::class,
+                        TMinus::class,
+                        TComplement::class,
+                        TLParen::class
+                    )
+                )
             }
         )
     }

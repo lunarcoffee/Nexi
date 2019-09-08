@@ -29,7 +29,10 @@ class Lexer(private val code: String) {
             return when (curChar) {
                 ':' -> TColon
                 ';' -> TSemicolon
+                '+' -> TPlus
                 '-' -> TMinus
+                '*' -> TAsterisk
+                '/' -> TDivide
                 '~' -> TComplement
                 '{' -> TLBrace
                 '}' -> TRBrace

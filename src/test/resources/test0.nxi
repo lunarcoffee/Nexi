@@ -1,7 +1,7 @@
 s32 main: {
-    return ~func();
+    return func();
 }
 
 s32 func: {
-    return 25;
+    return 2 * (3 + 4) / (5 - 1);
 }
