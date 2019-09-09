@@ -58,10 +58,20 @@ class Generator(parser: Parser, private val output: File) {
                 ${traverse(node.left)}
                 push eax
                 ${traverse(node.right)}
-                mov ecx, eax             ; Use ecx to hold the divisor since eax holds the result.
+                mov ecx, eax             ; Use ecx to hold the divisor.
                 pop eax                  ; Prepare the dividend.
                 xor edx, edx             ; Zero out edx to prevent division issues.
-                idiv ecx
+                div ecx
+            """
+            is NModulo -> """
+                ${traverse(node.left)}
+                push eax
+                ${traverse(node.right)}
+                mov ecx, eax             ; Use ecx to hold the divisor.
+                pop eax                  ; Prepare the dividend.
+                xor edx, edx             ; Zero out edx to prevent division issues.
+                div ecx
+                mov eax, edx             ; Return the remainder.
             """
         }
     }

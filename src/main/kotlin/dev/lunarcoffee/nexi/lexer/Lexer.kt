@@ -33,6 +33,7 @@ class Lexer(private val code: String) {
                 '-' -> TMinus
                 '*' -> TAsterisk
                 '/' -> TDivide
+                '%' -> TModulo
                 '~' -> TComplement
                 '{' -> TLBrace
                 '}' -> TRBrace

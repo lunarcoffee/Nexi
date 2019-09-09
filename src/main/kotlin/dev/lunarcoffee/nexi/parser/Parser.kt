@@ -58,18 +58,23 @@ class Parser(private val lexer: Lexer) {
         return NExp(term)
     }
 
-    // Next level of precedence for high precedence binary operators, including multiplication and
-    // division.
+    // Next level of precedence for high precedence binary operators, including multiplication,
+    // division, and the modulo operator.
     private fun term(): NExp {
         var factor: Node = factor()
         var next = lexer.peek()
 
         // Take arbitrarily many multiplication or division operators and then another term.
-        while (next == TAsterisk || next == TDivide) {
+        while (next == TAsterisk || next == TDivide || next == TModulo) {
             lexer.next()
             val other = factor()
 
-            factor = if (next == TAsterisk) NMultiply(factor, other) else NDivide(factor, other)
+            factor = when (next) {
+                TAsterisk -> NMultiply(factor, other)
+                TDivide -> NDivide(factor, other)
+                TModulo -> NModulo(factor, other)
+                else -> throw IllegalStateException()
+            }
             next = lexer.peek()
         }
         return NExp(factor)

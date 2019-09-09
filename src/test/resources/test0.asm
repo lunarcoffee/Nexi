@@ -16,12 +16,19 @@ imul eax, edx
 push eax
 mov eax, 5
 push eax
-mov eax, 1
+mov eax, 3
+push eax
+mov eax, 2
+mov ecx, eax             
+pop eax                  
+xor edx, edx             
+div ecx
+mov eax, edx             
 pop edx
 sub edx, eax
 mov eax, edx
 mov ecx, eax             
 pop eax                  
 xor edx, edx             
-idiv ecx
+div ecx
 ret
