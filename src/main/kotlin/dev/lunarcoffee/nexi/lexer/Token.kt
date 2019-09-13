@@ -16,6 +16,7 @@ object TRBrace : Token()
 object TLParen : Token()
 object TRParen : Token()
 object TEof : Token()
+object TEquals : Token()
 
 object TPlus : Token()
 object TMinus : Token()

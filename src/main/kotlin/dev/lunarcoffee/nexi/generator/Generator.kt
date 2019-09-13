@@ -60,7 +60,7 @@ class Generator(parser: Parser, private val output: File) {
                 ${traverse(node.right)}
                 mov ecx, eax             ; Use ecx to hold the divisor.
                 pop eax                  ; Prepare the dividend.
-                xor edx, edx             ; Zero out edx to prevent division issues.
+                xor edx, edx
                 div ecx
             """
             is NModulo -> """
@@ -69,10 +69,12 @@ class Generator(parser: Parser, private val output: File) {
                 ${traverse(node.right)}
                 mov ecx, eax             ; Use ecx to hold the divisor.
                 pop eax                  ; Prepare the dividend.
-                xor edx, edx             ; Zero out edx to prevent division issues.
+                xor edx, edx
                 div ecx
                 mov eax, edx             ; Return the remainder.
             """
+            is NAssignment -> ""
+            is NVariableReference -> ""
         }
     }
 }

@@ -39,6 +39,7 @@ class Lexer(private val code: String) {
                 '}' -> TRBrace
                 '(' -> TLParen
                 ')' -> TRParen
+                '=' -> TEquals
                 else -> throw LexerException(curChar, pos)
             }.also { advance() }
         }

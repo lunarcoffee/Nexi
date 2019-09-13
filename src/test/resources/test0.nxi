@@ -1,7 +1,9 @@
 s32 main: {
-    return func();
+    s32 value = func();
+    return value;
 }
 
 s32 func: {
-    return 2 * (3 + 4) / (5 - 3 % 2);
+    s32 var = 5 - 3 % 2;
+    return 2 * (3 + 4) / var;
 }

@@ -29,18 +29,38 @@ class Parser(private val lexer: Lexer) {
         val name = nextTested(TId::class)
         nextTested(TColon::class)
         nextTested(TLBrace::class)
-        val returnStatement = ret()
+
+        val body = mutableListOf<Node>()
+        while (lexer.peek() is TKeyword)
+            body += statement()
         nextTested(TRBrace::class)
 
-        return NFuncDef(name.name, returnStatement)
+        return NFuncDef(name.name, body)
+    }
+
+    private fun statement(): Node {
+        val next = nextTested(TKeyword::class)
+        return when (next.name) {
+            "return" -> ret()
+            "s32" -> assignment()
+            else -> throw IllegalArgumentException()
+        }
     }
 
     private fun ret(): NRet {
-        nextTested(TKeyword::class, "return")
         val exp = exp()
         semicolon()
 
         return NRet(exp)
+    }
+
+    private fun assignment(): NAssignment {
+        val name = nextTested(TId::class)
+        nextTested(TEquals::class)
+        val value = exp()
+        semicolon()
+
+        return NAssignment(name.name, value)
     }
 
     private fun exp(): NExp {
@@ -86,7 +106,7 @@ class Parser(private val lexer: Lexer) {
         return NExp(
             when (val peek = lexer.peek()) {
                 is TInt -> s32()
-                is TId -> funcCall()
+                is TId -> nameRef()
                 is TMinus -> unaryMinus()
                 is TComplement -> complement()
                 is TLParen -> {
@@ -110,12 +130,16 @@ class Parser(private val lexer: Lexer) {
         )
     }
 
-    private fun funcCall(): NFuncCall {
-        val name = nextTested(TId::class)
+    private fun nameRef(): Node {
+        val name = nextTested(TId::class).name
+        return if (lexer.peek() is TLParen) funcCall(name) else NVariableReference(name)
+    }
+
+    private fun funcCall(name: String): NFuncCall {
         nextTested(TLParen::class)
         nextTested(TRParen::class)
 
-        return NFuncCall(name.name)
+        return NFuncCall(name)
     }
 
     private fun unaryMinus(): NUnaryMinus {
