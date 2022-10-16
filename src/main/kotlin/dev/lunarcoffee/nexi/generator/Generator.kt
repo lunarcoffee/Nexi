@@ -30,7 +30,8 @@ class Generator(parser: Parser, private val output: File) {
             is NComplement -> "${traverse(node.exp)}\nnot eax"
             is NExp -> traverse(node.children[0])
             is NRet -> traverse(node.children[0]) + "\nret"
-            is NFuncDef -> "global ${node.name}\n${node.name}:\n${traverse(node.children[0])}"
+            is NFuncDef -> "global ${node.name}\n${node.name}:\n" +
+                    node.children.joinToString("\n") { traverse(it) }
             is NProgram -> node.children.joinToString("\n") { traverse(it) }
             is NPlus -> """
                 ${traverse(node.left)}
@@ -73,8 +74,9 @@ class Generator(parser: Parser, private val output: File) {
                 div ecx
                 mov eax, edx             ; Return the remainder.
             """
-            is NAssignment -> ""
-            is NVariableReference -> ""
+            // TODO (tbh this will never be done): support more than one local lmao
+            is NAssignment -> "${traverse(node.value)}\nmov ebx, eax"
+            is NVariableReference -> "mov eax, ebx"
         }
     }
 }

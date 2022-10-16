@@ -11,7 +11,6 @@ fun main(args: Array<String>) {
         println("Usage: nexic <file>")
         return
     }
-
     val code = File(args[0]).readText().trim()
 
     val lexer = Lexer(code)
